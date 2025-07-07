@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
     formData.append("rating", selectedRating);
     formData.append("image", image);
 
-    fetch("http://127.0.0.1:8000/books", {
+    fetch("https://yume-miniapp.ru/api/books", {
       method: "POST",
       headers: {
         "Authorization": "Bearer " + token

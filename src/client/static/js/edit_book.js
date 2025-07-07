@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Загрузка данных книги
-  fetch(`http://127.0.0.1:8000/book/${bookId}`, {
+  fetch(`https://yume-miniapp.ru/api/book/${bookId}`, {
     headers: {
       "Authorization": "Bearer " + token
     }
@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("title").value = bookData.title;
     document.getElementById("author").value = bookData.author;
     document.getElementById("description").value = bookData.description;
-    document.getElementById("previewImage").src = `http://127.0.0.1:8000/books/cover/${bookId}`;
+    document.getElementById("previewImage").src = `https://yume-miniapp.ru/api/books/cover/${bookId}`;
 
     const stars = document.querySelectorAll('.rating-input span');
     stars.forEach(star => {
@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
       formData.append("image", imageInput.files[0]);
     }
 
-    fetch(`http://127.0.0.1:8000/books/${bookId}`, {
+    fetch(`https://yume-miniapp.ru/api/books/${bookId}`, {
       method: "PUT",
       headers: {
         "Authorization": "Bearer " + token
