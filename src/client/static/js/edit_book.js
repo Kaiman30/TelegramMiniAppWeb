@@ -1,36 +1,37 @@
 document.addEventListener("DOMContentLoaded", () => {
+  const tg = window.Telegram.WebApp;
+  tg.ready();
+
+  const token = window.appData?.token;
+
+  if (!token) {
+    alert("Вы не авторизованы");
+    tg.close();
+    return;
+  }
+
   const urlParams = new URLSearchParams(window.location.search);
   const bookId = urlParams.get('book_id');
 
   if (!bookId) {
     alert("Не указан ID книги");
-    window.location.href = "/client/templates/account.html";
+    tg.close();
     return;
   }
 
   // Загрузка данных книги
   fetch(`http://127.0.0.1:8000/book/${bookId}`, {
-    method: "GET",
     headers: {
-      "Authorization": "Bearer " + localStorage.getItem("token")
+      "Authorization": "Bearer " + token
     }
   })
-  .then(res => {
-    if (res.status === 401) {
-      throw new Error("Сессия истекла");
-    }
-    return res.json();
-  })
+  .then(res => res.json())
   .then(bookData => {
-    // Предзаполнение полей
     document.getElementById("title").value = bookData.title;
     document.getElementById("author").value = bookData.author;
     document.getElementById("description").value = bookData.description;
-
-    // Установка обложки
     document.getElementById("previewImage").src = `http://127.0.0.1:8000/books/cover/${bookId}`;
 
-    // Установка рейтинга
     const stars = document.querySelectorAll('.rating-input span');
     stars.forEach(star => {
       star.addEventListener('click', () => {
@@ -39,19 +40,9 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
 
-    // Установка активного рейтинга
-    const ratingStars = document.querySelectorAll('.rating-input span');
-    ratingStars.forEach(star => {
-      star.classList.remove('active');
-    });
     for (let i = 0; i < Math.floor(bookData.rating); i++) {
-      ratingStars[i].classList.add('active');
+      stars[i].classList.add('active');
     }
-  })
-  .catch(err => {
-    console.error("Ошибка загрузки книги:", err);
-    alert("Ошибка: " + err.message);
-    window.location.href = "/client/templates/account.html";
   });
 
   // Обработка формы
@@ -69,7 +60,6 @@ document.addEventListener("DOMContentLoaded", () => {
     formData.append("author", author);
     formData.append("description", description);
     formData.append("rating", selectedRating);
-
     if (imageInput.files.length > 0) {
       formData.append("image", imageInput.files[0]);
     }
@@ -77,22 +67,17 @@ document.addEventListener("DOMContentLoaded", () => {
     fetch(`http://127.0.0.1:8000/books/${bookId}`, {
       method: "PUT",
       headers: {
-        "Authorization": "Bearer " + localStorage.getItem("token")
+        "Authorization": "Bearer " + token
       },
       body: formData
     })
-    .then(res => {
-      if (!res.ok) {
-        throw new Error("Ошибка сервера");
-      }
-      return res.json();
-    })
-    .then(data => {
-      window.location.href = "/client/templates/account.html";
+    .then(res => res.json())
+    .then(() => {
+      tg.close();
     })
     .catch(err => {
       console.error("Ошибка:", err);
-      alert("Произошла ошибка при сохранении книги");
+      alert("Ошибка при сохранении");
     });
   });
 });

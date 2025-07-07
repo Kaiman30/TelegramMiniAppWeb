@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Читательский дневник</title>
+  <link rel="stylesheet" href="./static/css/style.css" />
+  <script src="https://telegram.org/js/telegram-web-app.js?58"></script>
+</head>
+<body>
+  <!-- Шапка -->
+  <header class="navbar">
+    <div class="navbar-top">
+      <div class="logo">📚 Читательский дневник</div>
+      <h1 id="username" class="username">Пользователь</h1>
+    </div>
+    <button onclick="closeTelegramApp()">Закрыть</button>
+  </header>
+
+  <!-- Контейнер для карточек -->
+  <main class="book-list" id="bookList">
+    <!-- Здесь будут появляться карточки книг -->
+  </main>
+
+  <!-- Модальное окно -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span onclick="closeModal()" class="close">&times;</span>
+      <img id="modal-image" class="modal-book-image" src="" alt="Обложка книги" />
+      <h2 id="modal-title"></h2>
+      <p><strong>Автор:</strong> <span id="modal-author"></span></p>
+      <div class="divider"></div>
+      <p id="modal-description"></p>
+      <div class="divider"></div>
+      <div id="modal-rating" class="rating"></div>
+      <div class="modal-actions">
+        <button id="editBookBtn">Редактировать</button>
+        <button id="deleteBookBtn">Удалить</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="./static/js/account.js"></script>
+</body>
+</html>
