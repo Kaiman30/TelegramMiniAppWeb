@@ -4,11 +4,11 @@ from .database import Base
 
 class User(Base):
     __tablename__ = "users"
-    id = Column(Integer, primary_key=True, index=True)
-    username = Column(String, unique=True, index=True)
-    email = Column(String, unique=True, index=True)
-    hashed_password = Column(String)
-    books = relationship("Book", back_populates="owner")
+    id = Column(Integer, primary_key=True)
+    telegram_id = Column(Integer, unique=True, nullable=False)
+    username = Column(String, nullable=True)
+    first_name = Column(String)
+    last_name = Column(String)
 
 class Book(Base):
     __tablename__ = "books"
@@ -19,7 +19,6 @@ class Book(Base):
     rating = Column(Float)
     image = Column(LargeBinary)  # Хранение изображения в БД
     owner_id = Column(Integer, ForeignKey("users.id"))
-    owner = relationship("User", back_populates="books")
     
     def to_dict(self):
         return {
