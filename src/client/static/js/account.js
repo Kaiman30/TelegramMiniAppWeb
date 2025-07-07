@@ -5,7 +5,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const user = tg.initDataUnsafe?.user;
 
   if (!user) {
-    alert("Ошибка авторизации");
+    alert("Вы не авторизованы через Telegram");
+    tg.close();
     return;
   }
 
@@ -79,7 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
       addCard.className = "add-card";
       addCard.textContent = "+";
       addCard.onclick = () => {
-        window.location.href = "/client/templates/add_book.html";
+        window.location.href = "/client/add_book.html";
       };
       container.appendChild(addCard);
     });

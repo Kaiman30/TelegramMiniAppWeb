@@ -6,6 +6,11 @@ from fastapi import (FastAPI, Depends,
                      status)
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+
+from aiogram import Bot, Dispatcher, Router
+from aiogram.types import WebAppInfo, Update, Message
+from aiogram.filters import CommandStart
+
 import uvicorn
 import hashlib
 import hmac
@@ -18,8 +23,23 @@ from sqlalchemy.orm import Session
 from db.models import Book, User
 from db.database import engine, Base, get_db
 from config.config_reader import config
+from bot.keyboard import main_markup
 
-app = FastAPI()
+
+async def lifespan(app: FastAPI):
+    await bot.set_webhook(
+        url=f"https://yume-miniapp.ru/bot/webhook",
+        allowed_updates=dp.resolve_used_update_types(),
+        drop_pending_updates=True
+    )
+    
+    yield
+    await bot.session.close()
+    
+
+bot = Bot(config.BOT_TOKEN.get_secret_value())
+dp = Dispatcher()
+app = FastAPI(lifespan=lifespan)
 
 # CORS
 app.add_middleware(
@@ -51,7 +71,7 @@ def verify_telegram_data(data: dict):
     """Проверяет, что initData подписан корректно"""
     received_hash = data.pop("hash")
     data_check_string = "\n".join(f"{k}={v}" for k, v in sorted(data.items()))
-    secret_key = hashlib.sha256(config.BOT_TOKEN.encode()).digest()
+    secret_key = hashlib.sha256(config.BOT_TOKEN.get_secret_value().encode()).digest()
     calculated_hash = hmac.new(secret_key, data_check_string.encode(), hashlib.sha256).hexdigest()
     return calculated_hash == received_hash
 
@@ -61,6 +81,11 @@ def create_access_token(user_id: int) -> str:
     expires = datetime.utcnow() + timedelta(hours=24)
     token = jwt.encode({"user_id": user_id, "exp": expires}, config.SECRET_KEY.get_secret_value(), algorithm="HS256")
     return token
+
+
+@dp.message(CommandStart())
+async def start(message: Message) -> None:
+    await message.answer("Привет!", reply_markup=main_markup)
 
 
 @app.post("/auth/telegram")
