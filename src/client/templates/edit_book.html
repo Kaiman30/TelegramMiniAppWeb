@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Редактирование книги</title>
+  <link rel="stylesheet" href="../static/css/style.css" />
+  <script src="https://telegram.org/js/telegram-web-app.js?58"></script>
+</head>
+<body>
+  <!-- Шапка -->
+  <header class="navbar">
+    <div class="logo">📚 Читательский дневник</div>
+  </header>
+
+  <!-- Форма редактирования -->
+  <main class="book-edit-form">
+    <form id="editBookForm">
+      <!-- Обложка книги -->
+      <img id="previewImage" src="" alt="Обложка книги" class="book-image" />
+
+      <!-- Изображение -->
+      <input type="file" id="bookImage" accept="image/*" />
+
+      <!-- Название -->
+      <textarea type="text" id="title" rows=1 placeholder="Название книги:" required></textarea>
+
+      <!-- Автор -->
+      <textarea type="text" id="author" rows=1 placeholder="Автор книги" required></textarea>
+
+      <!-- Описание -->
+      <textarea id="description" rows=4 placeholder="Описание книги"></textarea>
+
+      <!-- Рейтинг -->
+      <div class="rating-input">
+        <span data-value="1">★</span>
+        <span data-value="2">★</span>
+        <span data-value="3">★</span>
+        <span data-value="4">★</span>
+        <span data-value="5">★</span>
+      </div>
+
+      <!-- Кнопка сохранения -->
+      <button class="submit-btn" type="submit">Сохранить изменения</button>
+    </form>
+  </main>
+
+  <script src="../static/js/edit_book.js"></script>
+</body>
+</html>

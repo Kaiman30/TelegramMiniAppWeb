@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Читательский дневник</title>
+  <link rel="stylesheet" href="../static/css/style.css" />
+  <script src="https://telegram.org/js/telegram-web-app.js?58"></script>
+</head>
+<body>
+  <!-- Шапка -->
+  <header class="navbar">
+    <div class="logo">📚 Читательский дневник</div>
+    <button id="authBtn" class="btn-auth" onclick="window.location.href='login.html'">Войти</button>
+  </header>
+
+  <!-- Основной контент -->
+  <main class="book-list">
+    <!-- Пример карточки -->
+    <div class="book-card" onclick="openBookDetails('Преступление и наказание', 'Фёдор Достоевский', 'Классический роман о душе человека и его внутренней борьбе.', '⭐⭐⭐⭐⭐')">
+      <img src="../static/images/book1.jpg" alt="Обложка книги" class="book-image"/>
+      <h3 class="book-title">Преступление и наказание</h3>
+      <p class="book-author">Фёдор Достоевский</p>
+    </div>
+
+  <!-- Модальное окно -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span onclick="closeModal()" class="close">&times;</span>
+      <h2 id="modal-title"></h2>
+      <p><strong>Автор:</strong> <span id="modal-author"></span></p>
+      <p id="modal-description"></p>
+      <div id="modal-rating" class="rating"></div>
+    </div>
+  </div>
+
+  <script src="../static/js/main.js"></script>
+</body>
+</html>

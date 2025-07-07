@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Добавить книгу</title>
+  <link rel="stylesheet" href="../static/css/style.css" />
+  <script src="https://telegram.org/js/telegram-web-app.js?58"></script>
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">📚 Читательский дневник</div>
+  </header>
+
+  <main class="form-container">
+    <h2>Добавить книгу</h2>
+
+    <label for="bookImage" class="upload-label">
+      Добавить обложку
+      <input type="file" id="bookImage" accept="image/*" />
+    </label>
+    <img id="preview" class="preview-image" src="" alt="Предпросмотр"/>
+
+    <textarea id="title" rows="1" placeholder="Название книги:"></textarea>
+    <textarea id="author" rows="1" placeholder="Автор:"></textarea>
+    <textarea id="description" rows="4" placeholder="Описание книги..."></textarea>
+
+    <div class="rating-input">
+      <span data-value="1">★</span>
+      <span data-value="2">★</span>
+      <span data-value="3">★</span>
+      <span data-value="4">★</span>
+      <span data-value="5">★</span>
+    </div>
+
+    <button class="submit-btn" onclick="saveBook()">Сохранить</button>
+  </main>
+
+  <script src="../static/js/add_book.js"></script>
+</body>
+</html>

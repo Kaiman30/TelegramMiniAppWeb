@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Регистрация</title>
+  <link rel="stylesheet" href="../static/css/style.css" />
+  <script src="https://telegram.org/js/telegram-web-app.js?58"></script>
+</head>
+<body>
+  <!-- Шапка -->
+  <header class="navbar">
+    <div class="logo">📚 Читательский дневник</div>
+  </header>
+
+  <!-- Форма регистрации -->
+  <main class="auth-container">
+    <h2>Регистрация</h2>
+
+    <form id="registerForm">
+      <input type="text" id="username" placeholder="Логин" required />
+      <input type="email" id="email" placeholder="Email" required />
+      <input type="password" id="password" placeholder="Пароль" required />
+
+      <button type="submit" class="submit-btn">Зарегистрироваться</button>
+    </form>
+
+    <p class="switch-mode" onclick="window.location.href='login.html'">
+      Уже есть аккаунт? Войдите
+    </p>
+  </main>
+
+  <script src="../static/js/register.js"></script>
+</body>
+</html>
